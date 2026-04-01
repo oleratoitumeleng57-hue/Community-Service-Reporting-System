@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Submitted</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #28a745;
+            text-align: center;
+        }
+
+        .report-id {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #e0f7fa;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .status.pending { background: #ffe0b2; color: #ff9800; }
+        .status.in-progress { background: #bbdefb; color: #2196f3; }
+        .status.resolved { background: #c8e6c9; color: #4caf50; }
+
+        .info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px 0 0;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn.green { background: #28a745; }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Issue Submitted Successfully!</h2>
+
+    {% if issue %}
+        <div class="report-id">
+            Your Report ID is: {{ issue.id }}
+        </div>
+
+        <div class="status 
+            {% if issue.status == 'PENDING' %}pending{% elif issue.status == 'IN_PROGRESS' %}in-progress{% elif issue.status == 'RESOLVED' %}resolved{% endif %}">
+            Status: {{ issue.status }}
+        </div>
+
+        <div class="info">
+            <strong>Location:</strong> {{ issue.location }}
+        </div>
+    {% else %}
+        <p>Something went wrong. Please try submitting again.</p>
+    {% endif %}
+
+    <a href="/track/" class="btn">Track Your Issue</a>
+    <a href="/" class="btn green">Submit Another Report</a>
+</div>
+
+</body>
+</html>
+
+
+

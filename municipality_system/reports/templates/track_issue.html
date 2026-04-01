@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Track Issue</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f6f8;
+        color: #333;
+        margin: 0; padding: 0;
+    }
+    .container {
+        max-width: 500px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    input[type="text"] {
+        padding: 10px;
+        width: 80%;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background: #007BFF;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+    .status {
+        font-weight: bold;
+        margin-top: 15px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+    .status.pending { background: #ffe0b2; color: #ff9800; }
+    .status.in-progress { background: #bbdefb; color: #2196f3; }
+    .status.resolved { background: #c8e6c9; color: #4caf50; }
+    .info { margin-top: 10px; padding: 10px; background: #f1f1f1; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Track Your Issue</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="issue_id" placeholder="Enter Report ID" required><br>
+        <button type="submit">Check Status</button>
+    </form>
+
+    {% if issue %}
+        <div class="status 
+            {% if issue.status == 'PENDING' %}pending{% elif issue.status == 'IN_PROGRESS' %}in-progress{% elif issue.status == 'RESOLVED' %}resolved{% endif %}">
+            Status: {{ issue.status }}
+        </div>
+        <div class="info">
+            <strong>Location:</strong> {{ issue.location }}
+        </div>
+    {% elif issue is not none %}
+        <p>Issue not found.</p>
+    {% endif %}
+</div>
+</body>
+</html>
